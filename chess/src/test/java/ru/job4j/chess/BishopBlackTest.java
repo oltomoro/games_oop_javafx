@@ -14,7 +14,8 @@ public class BishopBlackTest {
     public void whenCreateThenPositionIsValid() {
         Cell startPos = Cell.C1;
         Figure bb = new BishopBlack(startPos);
-        Assert.assertEquals("Текущая позиция фигуры не равна позиции указанной при инициализации", bb.position(), startPos);
+        Assert.assertEquals("Текущая позиция фигуры не равна позиции указанной при инициализации",
+                bb.position(), startPos);
     }
 
     @Test
