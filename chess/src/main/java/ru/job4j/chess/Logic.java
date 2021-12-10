@@ -18,6 +18,7 @@ public final class Logic {
 
     /**
      * Добавляет фигуру на поле
+     *
      * @param figure добавляемая фигура
      */
     public void add(Figure figure) {
@@ -26,11 +27,12 @@ public final class Logic {
 
     /**
      * Перемещает фигуру из начальной позиции в конечную
+     *
      * @param source начальная позиция фигуры
-     * @param dest конечная позиция фигуры
+     * @param dest   конечная позиция фигуры
      * @throws FigureNotFoundException если фигура отсутствует на клетке
      * @throws ImpossibleMoveException если фигура перемещается не по правилам
-     * @throws OccupiedCellException если фигура перемещается на занятую клетку
+     * @throws OccupiedCellException   если фигура перемещается на занятую клетку
      */
     public void move(Cell source, Cell dest)
             throws FigureNotFoundException, ImpossibleMoveException, OccupiedCellException {
@@ -48,16 +50,14 @@ public final class Logic {
      * @throws OccupiedCellException
      */
     private boolean free(Cell[] steps) throws OccupiedCellException {
-        boolean result = false;
         for (Cell cell : steps) {
-            try {
-                findBy(cell);
-                throw new OccupiedCellException();
-            } catch (FigureNotFoundException e) {
-                result = true;
+            for (Figure figure : figures) {
+                if (figure != null && figure.position().equals(cell)) {
+                    throw new OccupiedCellException();
+                }
             }
         }
-        return result;
+        return true;
     }
 
     /**
@@ -70,6 +70,7 @@ public final class Logic {
 
     /**
      * Проверяет есть ли фигура в указанной клетке
+     *
      * @param cell клетка в которой выполняется поиск
      * @return индекс фигуры, если она найдена
      * @throws FigureNotFoundException если фигура не найдена

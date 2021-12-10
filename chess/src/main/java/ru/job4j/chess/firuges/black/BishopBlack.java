@@ -12,6 +12,7 @@ public class BishopBlack implements Figure {
 
     /**
      * Конструктор
+     *
      * @param ps стартовая клетка фигуры
      */
     public BishopBlack(final Cell ps) {
@@ -20,6 +21,7 @@ public class BishopBlack implements Figure {
 
     /**
      * Возвращает текущую позицию фигуры
+     *
      * @return клетка в которой находится фигура
      */
     @Override
@@ -29,6 +31,7 @@ public class BishopBlack implements Figure {
 
     /**
      * Определяет все клетки которые пройдет фигура перед достижением конечной клетки
+     *
      * @param dest конечная клетка
      * @return массив клеток которые пройдет фигура
      */
@@ -41,13 +44,13 @@ public class BishopBlack implements Figure {
         }
         int size = Math.abs(dest.getX() - position.getX());
         Cell[] steps = new Cell[size];
-        int deltaX = dest.getX() - position.getX();
-        int deltaY = position.getY() - dest.getY();
+        int deltaX = dest.getX() - position.getX() > 0 ? 1 : -1;
+        int deltaY = dest.getY() - position.getY() > 0 ? 1 : -1;
+        int x = position.getX();
+        int y = position.getY();
         for (int index = 0; index < size; index++) {
-            int x = deltaX > 0
-                    ? position.getX() + deltaX - index : position.getX() - Math.abs(deltaX) + index;
-            int y = deltaY > 0
-                    ? position.getY() - deltaY + index : position.getY() + Math.abs(deltaY) - index;
+            x += deltaX;
+            y += deltaY;
             steps[index] = Cell.findBy(x, y);
         }
         return steps;
@@ -55,18 +58,18 @@ public class BishopBlack implements Figure {
 
     /**
      * Проверяет является ли путь фигуры диагональю
+     *
      * @param source начальная клетка пути
-     * @param dest конечная клетка пути
+     * @param dest   конечная клетка пути
      * @return true - если является диагональю, false - если нет
      */
     public boolean isDiagonal(Cell source, Cell dest) {
-        int deltaX = Math.abs(dest.getX() - source.getX());
-        int deltaY = Math.abs(source.getY() - dest.getY());
-        return deltaX == deltaY;
+        return Math.abs(dest.getX() - source.getX()) == Math.abs(source.getY() - dest.getY());
     }
 
     /**
      * Создает объект текущей фигуры в указанной клетке
+     *
      * @param dest клетка где нужно создать новый объект
      * @return объект новой созданной фигуры
      */
